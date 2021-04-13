@@ -28,4 +28,4 @@ moc_*
 *.out
 *.app
 
-
+/build/

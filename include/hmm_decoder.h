@@ -21,6 +21,9 @@
  * DefaultGUIModel with a custom GUI.
  */
 
+#ifndef HMM_DECODER_H
+#define HMM_DECODER_H
+
 #include <default_gui_model.h>
 #include <vector>
 #include <queue>
@@ -28,10 +31,7 @@
 //#include <rtdk.h>
 
 //new includes
-#include <printFuns.hpp>
-#include <shuttleFuns.hpp>
-#include <hmm_vec.hpp>
-
+#include <hmm.h>
 
 class HmmDecoder : public DefaultGUIModel
 {
@@ -43,15 +43,13 @@ public:
   virtual ~HmmDecoder(void);
 
   void execute(void);
-  void createGUI(DefaultGUIModel::variable_t*, int);
+  void createGUI(DefaultGUIModel::variable_t *, int);
   void customizeGUI(void);
 
 protected:
   virtual void update(DefaultGUIModel::update_flags_t);
 
-
 private:
-
   double some_parameter;
   double some_state;
   double period;
@@ -59,8 +57,7 @@ private:
   int nstates;
   int nevents;
 
-
-//--- HMM guess params
+  //--- HMM guess params
   double pfr1;
   double pfr2;
 
@@ -70,16 +67,16 @@ private:
   double ptr1;
   double ptr2;
 
-std::vector<double> trs;
-std::vector<double> frs;
-    //std::vector<std::vector<double>> trs;
-    //std::vector<std::vector<double>> frs;
+  std::vector<double> trs;
+  std::vector<double> frs;
+  //std::vector<std::vector<double>> trs;
+  //std::vector<std::vector<double>> frs;
   std::vector<double> vFr;
-    std::vector<double> vTr;
+  std::vector<double> vTr;
 
   //NB: this seems like bad coding form...
   HMMv guess_hmm = HMMv();
-//NEED THESE PARENTHS
+  //NEED THESE PARENTHS
 
   int buffi;
   int bufflen;
@@ -94,7 +91,7 @@ std::vector<double> frs;
   void initParameters();
   void advanceSpkBuffer(int);
   void decodeSpkBuffer();
-  int* decodeHMM(HMMv);
+  int *decodeHMM(HMMv);
   void restartHMM();
   void printStuff();
 
@@ -104,3 +101,5 @@ private slots:
   void aBttn_event(void);
   void bBttn_event(void);
 };
+
+#endif
