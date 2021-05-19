@@ -54,7 +54,7 @@ private:
   double period;
   double period_ms;
   int nStates;
-  int nSvents;
+  int nEvents;
 
   //--- HMM guess params
   double pfr1;
