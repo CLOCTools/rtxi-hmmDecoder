@@ -85,11 +85,6 @@ static DefaultGUIModel::variable_t vars[] = {
         "Transition rate",
         DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE,
     },
-    {
-        "A State",
-        "delete me",
-        DefaultGUIModel::STATE,
-    },
 };
 
 static size_t num_vars = sizeof(vars) / sizeof(DefaultGUIModel::variable_t);
@@ -259,8 +254,6 @@ void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
   case INIT:
     period = RT::System::getInstance()->getPeriod() * 1e-6; // ms
     period_ms = period * 1e-3;
-    setState("A State", some_state);
-
     setParameter("FR 1", pfr1 / period_ms);
     setParameter("FR 2", pfr2 / period_ms);
     setParameter("TR 1", ptr1 / period_ms);
