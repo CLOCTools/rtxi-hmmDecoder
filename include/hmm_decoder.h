@@ -24,17 +24,16 @@
 #ifndef HMM_DECODER_H
 #define HMM_DECODER_H
 
-#include <default_gui_model.h>
-#include <vector>
-#include <queue>
 #include <algorithm>
+#include <default_gui_model.h>
+#include <queue>
+#include <vector>
 //#include <rtdk.h>
 
-//new includes
+// new includes
 #include <hmm.h>
 
-class HmmDecoder : public DefaultGUIModel
-{
+class HmmDecoder : public DefaultGUIModel {
 
   Q_OBJECT
 
@@ -54,29 +53,29 @@ private:
   double some_state;
   double period;
   double period_ms;
-  int nstates;
-  int nevents;
+  int nStates;
+  int nSvents;
 
   //--- HMM guess params
   double pfr1;
   double pfr2;
 
   double pfr3;
-  double pfr4; //turns these into a vector double
+  double pfr4; // turns these into a vector double
 
   double ptr1;
   double ptr2;
 
   std::vector<double> trs;
   std::vector<double> frs;
-  //std::vector<std::vector<double>> trs;
-  //std::vector<std::vector<double>> frs;
+  // std::vector<std::vector<double>> trs;
+  // std::vector<std::vector<double>> frs;
   std::vector<double> vFr;
   std::vector<double> vTr;
 
-  //NB: this seems like bad coding form...
+  // NB: this seems like bad coding form...
   HMMv guess_hmm = HMMv();
-  //NEED THESE PARENTHS
+  // NEED THESE PARENTHS
 
   int buffi;
   int bufflen;
@@ -87,7 +86,7 @@ private:
   double spike_current;
   bool doSample;
 
-  void buildBigHMM();
+  void buildBigHMM(); // likely unnecessary
   void initParameters();
   void advanceSpkBuffer(int);
   void decodeSpkBuffer();
