@@ -85,7 +85,7 @@ static DefaultGUIModel::variable_t vars[] = {
 static size_t num_vars = sizeof(vars) / sizeof(DefaultGUIModel::variable_t);
 
 HmmDecoder::HmmDecoder(void)
-    : DefaultGUIModel("HmmDecoder with Custom GUI", ::vars, ::num_vars), spike_current(0.0), doSample(false)
+    : DefaultGUIModel("HmmDecoder BENCHMARK VERSION", ::vars, ::num_vars), spike_current(0.0), doSample(false)
 {
   setWhatsThis("<p><b>HmmDecoder:</b><br>QWhatsThis description.</p>");
   DefaultGUIModel::createGUI(vars,
