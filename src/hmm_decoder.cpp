@@ -252,6 +252,8 @@ void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
   case MODIFY:
     some_parameter = getParameter("GUI label").toDouble();
 
+    nStates = getParameter("Num States").toInt();    // NEW
+    bufflen = getParameter("Buffer Length").toInt(); // NEW
     //Need to add the *period*1e3 in here;
     pfr1 = getParameter("FR 1").toDouble() * period_ms;
     pfr2 = getParameter("FR 2").toDouble() * period_ms;
@@ -288,13 +290,13 @@ void HmmDecoder::customizeGUI(void)
   QGroupBox *button_group = new QGroupBox;
 
   QPushButton *abutton = new QPushButton("Button A"); //todo deleteme
-  QPushButton *bbutton = new QPushButton("Button B"); //todo deleteme
+  // QPushButton *bbutton = new QPushButton("Button B"); //todo deleteme
   QHBoxLayout *button_layout = new QHBoxLayout;
   button_group->setLayout(button_layout);
   button_layout->addWidget(abutton);                                       //DEL
-  button_layout->addWidget(bbutton);                                       //DEL
+  // button_layout->addWidget(bbutton);                                       //DEL
   QObject::connect(abutton, SIGNAL(clicked()), this, SLOT(aBttn_event())); //DEL
-  QObject::connect(bbutton, SIGNAL(clicked()), this, SLOT(bBttn_event())); //DEL
+  // QObject::connect(bbutton, SIGNAL(clicked()), this, SLOT(bBttn_event())); //DEL
 
   customlayout->addWidget(button_group, 0, 0);
   setLayout(customlayout);
@@ -322,7 +324,7 @@ void HmmDecoder::aBttn_event(void)
   printStuff();
 }
 
-void HmmDecoder::bBttn_event(void)
-{
-  printf(",,");
-}
+// void HmmDecoder::bBttn_event(void)
+// {
+//   printf(",,");
+// }
