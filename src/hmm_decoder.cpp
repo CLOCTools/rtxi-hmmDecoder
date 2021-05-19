@@ -184,8 +184,8 @@ void HmmDecoder::initParameters(void)
   ptr1=2e-4;
   ptr2=2e-4;
   */
-  nstates = 2;
-  nevents = 2;
+  nStates = 2;
+  nEvents = 2;
   pfr1 = 1e-3;  //1-1e-2;//
   pfr2 = 20e-3; //.7;//
 
@@ -270,7 +270,8 @@ void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
     period = RT::System::getInstance()->getPeriod() * 1e-6; // ms
     period_ms = period * 1e-3;
     setState("A State", some_state);
-
+    setParameter("Num States", nStates);       // NEW
+    setParameter("Buffer Length", bufflen); // NEW
     setParameter("FR 1", pfr1 / period_ms);
     setParameter("FR 2", pfr2 / period_ms);
     setParameter("TR 1", ptr1 / period_ms);
