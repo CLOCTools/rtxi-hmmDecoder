@@ -21,21 +21,6 @@
  * DefaultGUIModel with a custom GUI.
  */
 
-//printing vector options https://stackoverflow.com/questions/10750057/how-to-print-out-the-contents-of-a-vector
-
-//vector printing code
-/*
-  printf("\nspikes:\n");
-  for (auto i: spike_buff) { printf("%d`",i); }
-  printf("\n---\n");
-
-  for (int i=0; i<bufflen; i++)
-  {
-       printf("%d,",guessed[i]);
-  }
-  printf("\ndecode done\n");
-*/
-
 #include "hmm_decoder.h"
 #include "moc_hmm_decoder.cpp"
 
@@ -94,11 +79,7 @@ static DefaultGUIModel::variable_t vars[] = {
         "Transition rate",
         DefaultGUIModel::PARAMETER | DefaultGUIModel::DOUBLE,
     },
-    {
-        "A State",
-        "delete me",
-        DefaultGUIModel::STATE,
-    },
+
 };
 
 static size_t num_vars = sizeof(vars) / sizeof(DefaultGUIModel::variable_t);
@@ -156,20 +137,6 @@ void HmmDecoder::buildBigHMM()
   vTr = {ptr1, ptr2};
   trs = vTr;
   frs = vFr;
-
-  /*
-    double ptr1_ = (1.0-(ptr1*(nstates-1)));
-    double ptr2_ = (1.0-(ptr2*(nstates-1)));
-
-    double pfr1_ = (1.0-pfr1)/(nevents-1);
-    double pfr2_ = (1.0-pfr2)/(nevents-1);
-
-    trs = {{ptr1_, ptr1,ptr1}, {ptr1,ptr1_,ptr1}, {ptr1,ptr1,ptr1_}};
-    frs = {{pfr1,pfr1_,pfr1_}, {pfr2_,pfr2,pfr2_}, {pfr1_,pfr1_,pfr1}};
-*/
-  //   =  {             .9  }
-  // trs = {{ptr1_, ptr1},{ptr1,ptr1_}};
-  //frs = {{20,1,1}, {1,1,20}};
 }
 
 void HmmDecoder::initParameters(void)
@@ -254,9 +221,12 @@ void HmmDecoder::restartHMM()
 {
   //really,and internalize parameter modifications from GUI
   //do I actually want to reset the spike buffer? probably not?
-  std::vector<double> PI(nstates, .5);
+  // std::vector<double> PI(nstates, .5);
 
-  guess_hmm = HMMv(nstates, nevents);
+  guess_hmm = HMMv(nStates, nEvents); // NEW, hardcode a default HMM which DOES NOT
+  // have adjustable parameters, for the same of being easy to adjust the number
+  // of states
+  // for testing - May 19th 2021
   //, trs, frs, PI);
   //decodeSpkBuffer();//?
 }
@@ -269,7 +239,7 @@ void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
   case INIT:
     period = RT::System::getInstance()->getPeriod() * 1e-6; // ms
     period_ms = period * 1e-3;
-    setState("A State", some_state);
+    // setState("A State", some_state);
     setParameter("Num States", nStates);       // NEW
     setParameter("Buffer Length", bufflen); // NEW
     setParameter("FR 1", pfr1 / period_ms);
