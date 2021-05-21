@@ -128,7 +128,7 @@ void HmmDecoder::execute(void)
   if (spike_current >= guess_hmm.nevents)
   {
     spike_current = guess_hmm.nevents-1;
-    printf('\nwarning: spike out of bounds...\n')
+    printf("\nWARNING: spike out of bounds...\n");
   }
   if (spike_current<0)
   {
@@ -340,11 +340,11 @@ void HmmDecoder::aBttn_event(void)
 {
   doInterpolateSpikes = !doInterpolateSpikes; // toggle whether we're intrpolating spikes
   if (doInterpolateSpikes) {
-    printf('\nNOTE: now interpolating spikes\n')
+    printf("\nNOTE: now interpolating spikes\n");
   }
   else
   {
-    printf('\nNOTE: now decoding RAW spikes\n')
+    printf("\nNOTE: now decoding RAW spikes\n");
   }
   printStuff();
 }
