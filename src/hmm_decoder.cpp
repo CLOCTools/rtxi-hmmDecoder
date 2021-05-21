@@ -85,7 +85,7 @@ static DefaultGUIModel::variable_t vars[] = {
 static size_t num_vars = sizeof(vars) / sizeof(DefaultGUIModel::variable_t);
 
 HmmDecoder::HmmDecoder(void)
-    : DefaultGUIModel("HmmDecoder BENCHMARK VERSION", ::vars, ::num_vars), spike_current(0.0), doSample(false)
+    : DefaultGUIModel("HmmDecoder BENCHMARK VERSION", ::vars, ::num_vars), spike_current(0.0), oddSample(false), doInterpolateSpikes(false)
 {
   setWhatsThis("<p><b>HmmDecoder:</b><br>QWhatsThis description.</p>");
   DefaultGUIModel::createGUI(vars,
@@ -107,20 +107,28 @@ HmmDecoder::~HmmDecoder(void)
 void HmmDecoder::execute(void)
 {
   // TODO: temporary fudge. un-interpolates spike inputs to handle downsampled tdt spikes
-  if (doSample)
-  {
-    spike_current = ceil(2 * input(0));
-  }
-  else
-  {
-    spike_current = 0.0;
-  }
-  doSample = !doSample;
 
+  if (doInterpolateSpikes)
+  {
+      if (oddSample)
+    {
+      spike_current = ceil(2 * input(0)); // un-does 500Hz TDT->RTXI downsampling
+    }
+    else
+    {
+      spike_current = 0.0;
+    }
+    oddSample = !oddSample;
+  }
+  else 
+  {
+    spike_current = input(0);
+  }
 
   if (spike_current >= guess_hmm.nevents)
   {
     spike_current = guess_hmm.nevents-1;
+    printf('\nwarning: spike out of bounds...\n')
   }
   if (spike_current<0)
   {
@@ -298,7 +306,7 @@ void HmmDecoder::customizeGUI(void)
 
   QGroupBox *button_group = new QGroupBox;
 
-  QPushButton *abutton = new QPushButton("Button A"); //todo deleteme
+  QPushButton *abutton = new QPushButton("Toggle Spike Interpolation"); //todo deleteme
   // QPushButton *bbutton = new QPushButton("Button B"); //todo deleteme
   QHBoxLayout *button_layout = new QHBoxLayout;
   button_group->setLayout(button_layout);
@@ -330,6 +338,14 @@ void HmmDecoder::printStuff(void)
 // functions designated as Qt slots are implemented as regular C++ functions
 void HmmDecoder::aBttn_event(void)
 {
+  doInterpolateSpikes = !doInterpolateSpikes; // toggle whether we're intrpolating spikes
+  if (doInterpolateSpikes) {
+    printf('\nNOTE: now interpolating spikes\n')
+  }
+  else
+  {
+    printf('\nNOTE: now decoding RAW spikes\n')
+  }
   printStuff();
 }
 

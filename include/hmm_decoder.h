@@ -84,7 +84,9 @@ private:
 
   // TODO: temporary fudge
   double spike_current;
-  bool doSample;
+  // bool doSample;
+  bool doInterpolateSpikes;
+  bool oddSample;
 
   void buildBigHMM(); // likely unnecessary
   void initParameters();
