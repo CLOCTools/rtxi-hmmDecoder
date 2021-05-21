@@ -106,7 +106,7 @@ HmmDecoder::~HmmDecoder(void)
 
 void HmmDecoder::execute(void)
 {
-  // TODO: temporary fudge.
+  // TODO: temporary fudge. un-interpolates spike inputs to handle downsampled tdt spikes
   if (doSample)
   {
     spike_current = ceil(2 * input(0));
@@ -117,8 +117,17 @@ void HmmDecoder::execute(void)
   }
   doSample = !doSample;
 
+
+  if (spike_current >= guess_hmm.nevents)
+  {
+    spike_current = guess_hmm.nevents-1;
+  }
+  if (spike_current<0)
+  {
+    spike_current = 0.0;
+  }
   //pull from input(0) into buffer
-  //decode HMM state in existing buffer
+  //decode HMM state in existing buffer 
   advanceSpkBuffer(spike_current);
   decodeSpkBuffer();
 
@@ -233,7 +242,7 @@ void HmmDecoder::restartHMM()
 
 void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
 {
-  int nnn;
+  // int nnn;
   switch (flag)
   {
   case INIT:
@@ -264,7 +273,7 @@ void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
     vTr = {ptr1, ptr2};
 
     restartHMM();
-
+    printf("decoder was sucessfully modified");
     //decodeSpkBuffer();
     break;
 
