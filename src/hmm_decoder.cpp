@@ -281,7 +281,7 @@ void HmmDecoder::update(DefaultGUIModel::update_flags_t flag)
     vTr = {ptr1, ptr2};
 
     restartHMM();
-    printf("decoder was sucessfully modified");
+    // printf("\ndecoder was sucessfully modified\n");
     //decodeSpkBuffer();
     break;
 
