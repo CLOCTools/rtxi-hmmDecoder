@@ -4,7 +4,6 @@ close all
 set(0,'DefaultAxesFontSize',15)
 %%
 %{
-h5disp('hmm_gen_decode_rec1.h5')
 %[a]=h5read('hmm_gen_decode_rec1.h5',"/Trial1/Synchronous Data/001 HmmGenerator with Custom GUI 11  Spike")
 [Data]=h5read('hmm_gen_decode_rec1.h5',"/Trial1/Synchronous Data/Channel Data");
 %hmm_gen_decode_rec2_fr20_50_tr_p8_p4
